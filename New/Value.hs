@@ -1,4 +1,4 @@
-module Value(value)where
+module Value(valueall)where
 
 import DataType
 import Other_Function
@@ -16,3 +16,6 @@ value optlist before (x:rest)=value optlist (x:before) rest
 
 
 
+valueall :: [ItemList Integer String Opttype]->Exp->Exp
+valueall optlist (Exp exp)=car (foldl (valuenew) (map (valueall optlist) exp) (map clothesOff optlist))
+                            where valuenew input opt=value opt [] input
