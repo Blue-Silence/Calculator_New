@@ -3,8 +3,12 @@ module Tools(
    ,get_opt
    ,car
    ,cdr
-   ,nullif
+   ,notnull
    ,ccar
+   ,clothesOff
+   ,st
+   ,nd
+   ,rd
 )where
 
 import DataType
@@ -17,8 +21,14 @@ get_opt (ItemList _ list) opt=(get list opt)
 
 car (x:y)=x
 cdr (x:y)=y
-nullif []=True
-nullif x=False
+notnull []=False
+notnull x=True
 ccar (x,_)=x
 
+st (x,_,_)=x
+nd (_,x,_)=x
+rd (_,_,x)=x
+
+clothesOff :: ItemList a b c->[(b,c)]
+clothesOff (ItemList _ x)=x
  
