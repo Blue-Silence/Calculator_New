@@ -3,17 +3,12 @@ module ValueMain(valueMain)where
 import Transfer
 import Value
 import DataType
+import Tools
 
-type OptList=([ItemList Integer String (Exp->Exp->Exp)],([(String,(Exp->Exp))]),[ItemList Integer String (Exp->Exp->Exp)])
+type Opttype=[Exp]->[Exp]->(Exp,[Exp],[Exp])
 
-valueMain optlist str=valueall optlist (((transfer . getOptStr) optlist) str)
-
-getName :: [(a,b)]->[a]
-getName=foldl (\former (x,_)->(x:former)) [] 
-
-getOptStr :: OptList->[String]
-getOptStr ([],[],[])=[]
-getOptStr ([],[],((ItemList _ x):xs))=(getName x)++(getOptStr ([],[],xs))
-getOptStr (((ItemList _ x):xs),y,rest)=(getName y)++(getName x)++(getOptStr (xs,[],rest))
-
+valueMain :: [ItemList Integer String Opttype]->String->Exp
+valueMain optlist=valueall list . transfer listName
+                        where list=map (clothesOff) optlist
+                              listName=foldl1 (++) (map (map ccar) list)
 

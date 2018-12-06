@@ -16,6 +16,7 @@ value optlist before (x:rest)=value optlist (x:before) rest
 
 
 
-valueall :: [ItemList Integer String Opttype]->Exp->Exp
-valueall optlist (Exp exp)=car (foldl (valuenew) (map (valueall optlist) exp) (map clothesOff optlist))
-                            where valuenew input opt=value opt [] input
+valueall :: [[(String,Opttype)]]->Exp->Exp
+valueall list (Exp exp)=car (foldl (valuestart) expnow list)
+                        where valuestart input listnew=value listnew [] input
+                              expnow=map (valueall list) exp
